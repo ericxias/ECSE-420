@@ -4,8 +4,8 @@ import java.util.concurrent.locks.*;
 import java.util.concurrent.TimeUnit;
 
 class Filter implements Lock{
-    int[] level;
-    int[] victim;
+    volatile int[] level;
+    volatile int[] victim;
     private int n;
 
     public Filter(int n){
@@ -37,6 +37,7 @@ class Filter implements Lock{
         level[i] = 0;
     }
 
+    // dummy methods
     @Override
     public void lockInterruptibly() throws InterruptedException {
     }
