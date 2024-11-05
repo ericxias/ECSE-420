@@ -63,10 +63,8 @@ public class MutualExclusionTest {
         testLock(filterLock);
 
         // Test Bakery lock
-        /*
-        Bakery bakeryLock = new Bakery(NUM_THREADS);
+        LamportBakeryLock bakeryLock = new LamportBakeryLock(NUM_THREADS);
         System.out.println("Testing Bakery lock:");
         testLock(bakeryLock);
-        */
     }
 }
