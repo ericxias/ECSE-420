@@ -10,7 +10,7 @@ public class MutualExclusionTest {
     private static int counter = 0;
     private static boolean isInCriticalSection = false;
 
-    public static void testLock(Lock lock) throws InterruptedException {
+    public static void testLock(Lock lock){
         // Reset shared counter
         counter = 0; 
         isInCriticalSection = false;
@@ -19,33 +19,11 @@ public class MutualExclusionTest {
         
         // for each thread, whenever a thread enters the critical section, it increments the shared counter
         for (int i = 0; i < NUM_THREADS; i++) {
-            executor.submit(() -> {
-                for (int j = 0; j < NUM_ITERATIONS; j++) {
-                    lock.lock();
-                    try {
-
-                        // Check if multiple threads are in the critical section
-                        if (isInCriticalSection) {
-                            System.out.println("Multiple threads in critical section");
-                            // stop the test
-                            executor.shutdown();
-                        }
-                        isInCriticalSection = true;
-
-                        // Critical section
-                        counter++;
-
-                        // exit critical section
-                        isInCriticalSection = false;
-                    } finally {
-                        lock.unlock();
-                    }
-                }
-            });
+            executor.execute(new lockTask(lock, executor));
         }
 
         executor.shutdown();
-        while (!executor.isTerminated()){}
+        while (!executor.isTerminated()){} 
 
         // Check if counter is equal to number of times threads should have entered critical section
         int expectedCount = NUM_THREADS * NUM_ITERATIONS;
@@ -56,7 +34,40 @@ public class MutualExclusionTest {
         }
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static class lockTask implements Runnable {
+        private final Lock lock;
+        private final ExecutorService executor;
+        
+        public lockTask(Lock lock, ExecutorService executor) {
+            this.lock = lock;
+            this.executor = executor;
+        }
+
+        public void run() {
+            for (int i = 0; i < NUM_ITERATIONS; i++) {
+                lock.lock();
+                try {
+                    // Check if multiple threads are in the critical section
+                    if (isInCriticalSection) {
+                        System.out.println("Multiple threads in critical section");
+                        //shut down test -> test failed
+                        executor.shutdownNow();
+                    }
+                    isInCriticalSection = true;
+
+                    // Critical section
+                    counter++;
+
+                    // exit critical section
+                    isInCriticalSection = false;
+                } finally {
+                    lock.unlock();
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args){
         // Test Filter lock
         Filter filterLock = new Filter(NUM_THREADS);
         System.out.println("Testing Filter lock:");
