@@ -17,7 +17,7 @@ public class MutualExclusionTest {
         ExecutorService executor = Executors.newFixedThreadPool(NUM_THREADS);
         System.out.println("Testing with " + NUM_THREADS + " threads and " + NUM_ITERATIONS + " iterations per thread");
         
-        // for each thread, whenever a thread enters the critical section, it increments the shared counter
+        // Run threads
         for (int i = 0; i < NUM_THREADS; i++) {
             executor.execute(new lockTask(lock, executor));
         }
@@ -37,13 +37,15 @@ public class MutualExclusionTest {
     public static class lockTask implements Runnable {
         private final Lock lock;
         private final ExecutorService executor;
-        
+
         public lockTask(Lock lock, ExecutorService executor) {
             this.lock = lock;
             this.executor = executor;
         }
-
+        
+        @Override
         public void run() {
+            // for each thread and iterations, whenever a thread enters the critical section, it increments the shared counter
             for (int i = 0; i < NUM_ITERATIONS; i++) {
                 lock.lock();
                 try {
