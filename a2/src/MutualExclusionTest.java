@@ -4,6 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
 
+
 public class MutualExclusionTest {
     private static final int NUM_THREADS = 5;
     private static final int NUM_ITERATIONS = 10;
@@ -15,7 +16,7 @@ public class MutualExclusionTest {
         counter = 0; 
         isInCriticalSection = false;
         ExecutorService executor = Executors.newFixedThreadPool(NUM_THREADS);
-        System.out.println("Testing with " + NUM_THREADS + " threads and " + NUM_ITERATIONS + " iterations per thread");
+        System.out.println("Testing with " + NUM_THREADS + " threads and"  + NUM_ITERATIONS + " iterations per thread");
         
         // Run threads
         for (int i = 0; i < NUM_THREADS; i++) {

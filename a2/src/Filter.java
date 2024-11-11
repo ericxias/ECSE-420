@@ -3,7 +3,7 @@ package a2.src;
 import java.util.concurrent.locks.*;
 import java.util.concurrent.TimeUnit;
 
-class Filter implements Lock{
+public class Filter implements Lock{
     volatile int[] level;
     volatile int[] victim;
     private int n;
