@@ -23,6 +23,7 @@ public class LamportBakeryLock implements Lock {
     @Override
     public void lock() {
         int me = (int) Thread.currentThread().getId() % n;
+        System.out.println("Thread " + me + " acquiring lock");
         flag[me] = true;
         int max = Label.maximum(label);
         label[me] = new Label(max + 1);
