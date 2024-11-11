@@ -16,7 +16,7 @@ public class MutualExclusionTest {
         counter = 0; 
         isInCriticalSection = false;
         ExecutorService executor = Executors.newFixedThreadPool(NUM_THREADS);
-        System.out.println("Testing with " + NUM_THREADS + " threads and"  + NUM_ITERATIONS + " iterations per thread");
+        System.out.println("Testing with " + NUM_THREADS + " threads and "  + NUM_ITERATIONS + " iterations per thread");
         
         // Run threads
         for (int i = 0; i < NUM_THREADS; i++) {
@@ -25,7 +25,6 @@ public class MutualExclusionTest {
 
         executor.shutdown();
         while (!executor.isTerminated()){} 
-
         // Check if counter is equal to number of times threads should have entered critical section
         int expectedCount = NUM_THREADS * NUM_ITERATIONS;
         if (counter == expectedCount) {
@@ -56,12 +55,10 @@ public class MutualExclusionTest {
                         //shut down test -> test failed
                         executor.shutdownNow();
                     }
+
+                    // Enter and exit critical section
                     isInCriticalSection = true;
-
-                    // Critical section
                     counter++;
-
-                    // exit critical section
                     isInCriticalSection = false;
                 } finally {
                     lock.unlock();
