@@ -137,6 +137,7 @@ public class FineList<T> {
         // True cases: i = 1 - 3 False case: i = 4
         for (int i = 1; i <= 4; i++){
             System.out.println("Testing if " + i + " is in the list: " + fineList.contains(i));
+            // fail conditions
             if ((!fineList.contains(i) && i != 4) || (fineList.contains(i) && i == 4)){
                 System.out.println("Test failed");
             }
@@ -146,6 +147,7 @@ public class FineList<T> {
         System.out.println("Removing 1 from the list");
         fineList.remove(1);
         System.out.println("Testing if 1 is in the list: " + fineList.contains(1));
+        // fail condition
         if (fineList.contains(1)){
             System.out.println("Test failed");
         }
@@ -156,6 +158,7 @@ public class FineList<T> {
         fineList.add(Integer.MIN_VALUE);
         System.out.println("Testing if max value is in the list: " + fineList.contains(Integer.MAX_VALUE));
         System.out.println("Testing if min value is in the list: " + fineList.contains(Integer.MIN_VALUE));
+        // fail conditions
         if (!fineList.contains(Integer.MAX_VALUE) || !fineList.contains(Integer.MIN_VALUE)){
             System.out.println("Test failed");
         }
