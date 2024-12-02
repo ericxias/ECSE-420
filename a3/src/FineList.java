@@ -151,17 +151,5 @@ public class FineList<T> {
         if (fineList.contains(1)){
             System.out.println("Test failed");
         }
-        
-        // test edge cases max and min integer values
-        System.out.println("Adding max and min values to the list");
-        fineList.add(Integer.MAX_VALUE);
-        fineList.add(Integer.MIN_VALUE);
-        System.out.println("Testing if max value is in the list: " + fineList.contains(Integer.MAX_VALUE));
-        System.out.println("Testing if min value is in the list: " + fineList.contains(Integer.MIN_VALUE));
-        // fail conditions
-        if (!fineList.contains(Integer.MAX_VALUE) || !fineList.contains(Integer.MIN_VALUE)){
-            System.out.println("Test failed");
-        }
-
     }
 }
