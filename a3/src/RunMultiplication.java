@@ -1,7 +1,6 @@
 package a3.src;
 
 import java.util.Random;
-import java.util.concurrent.ExecutionException;
 
 public class RunMultiplication {
 
@@ -11,7 +10,7 @@ public class RunMultiplication {
         for (int i = 0; i < length; i++){
             createdVector[i] = (double)generator.nextInt(11);
         }
-        printVector(createdVector);
+        //printVector(createdVector);
         return createdVector;
     }
 
@@ -23,7 +22,7 @@ public class RunMultiplication {
                 createdMatrix[i][j] = (double)generator.nextInt(11);
             }
         }
-        printMatrix(createdMatrix);
+        //printMatrix(createdMatrix);
         return createdMatrix;
     }
 
@@ -54,8 +53,8 @@ public class RunMultiplication {
 		System.err.println("\n");
 	}
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException{
-        int length = 4;
+    public static void main(String[] args) throws IllegalArgumentException{
+        int length = 4000;
         double[] vector = newRandomVector(length);
         double[][] matrix = newRandomMatrix(length);
 
@@ -66,15 +65,17 @@ public class RunMultiplication {
         sequentialResult = SequentialMatrixMultiplication.sequentialMatrixMultiplication(vector, matrix);
         long seqEndTime = System.currentTimeMillis();
         long sequentialTime = seqEndTime - seqStartTime;
+        System.out.println("Sequential matrix muliplication runtime: " + (sequentialTime) + " ms");
 
-        printVector(sequentialResult);
+        //printVector(sequentialResult);
 
         long parStartTime = System.currentTimeMillis();
         parallelResult = ParallelMatrixMultiplication.parallelMatrixMultiplication(vector, matrix);
         long parEndTime = System.currentTimeMillis();
         long parallelTime = parEndTime - parStartTime;
+        System.out.println("Parallel matrix muliplication runtime: " + (parallelTime) + " ms");
 
-        printVector(parallelResult);
+        //printVector(parallelResult);
     }
     
 }
