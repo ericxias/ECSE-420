@@ -15,7 +15,7 @@ public class ParallelMatrixMultiplication {
 
     // Create a cached thread pool.
     static ExecutorService exec = Executors.newCachedThreadPool();
-    int threads = 8;
+    int threads = 12;
     static int threshold = 50;
     
         /**
@@ -73,7 +73,9 @@ public class ParallelMatrixMultiplication {
                     // Once the threshold is reached, it is faster to calculate the results sequentially.
                     if(numRows <= threshold){
                     for(int l = 0; l < numCols; l++){
-                        result[startRow] += matrix[startRow][l] * vector[l];
+                        for(int j = startRow; j < startRow+numRows; j++){
+                            result[j] += matrix[j][l] * vector[l];
+                        }
                     }
                 } else {
                     // Otherwise, split the array in half recursively and submit the subtasks.

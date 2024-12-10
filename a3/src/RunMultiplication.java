@@ -54,7 +54,7 @@ public class RunMultiplication {
 	}
 
     public static void main(String[] args) throws IllegalArgumentException{
-        int length = 4000;
+        int length = 20000;
         double[] vector = newRandomVector(length);
         double[][] matrix = newRandomMatrix(length);
 
